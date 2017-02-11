@@ -37,10 +37,24 @@ app.js - header.js  :  전체선택 / 토글 toggleAll ----> TodoList (전체)
 	 			  	 토글 / toggleTodo
 
 		- Footer.js  : 필터 selectFilter
-						모두삭제 : deleteCompleted  			   
+						모두삭제 : deleteCompleted  	
+
+
+
+todo data  : id  / text 할일  / isDone 
+
+todoList => todo
+		props
 
 
 
 
+todoList - > 
+todo delete 
+
+
+
+	<Header addTodo={this.addTodo.bind(this)} />
+바인딩
 
 
