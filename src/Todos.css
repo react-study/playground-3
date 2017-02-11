@@ -150,6 +150,7 @@ label[for='toggle-all'] {
 	font-size: 24px;
 	padding-left: 45px;
 	border-bottom: 1px solid #ededed;
+	list-style: none;
 }
 
 .todo-item:last-child {
