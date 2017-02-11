@@ -24,7 +24,7 @@ class App extends Component {
 				}
 			]
 		};
-		// this.addTodo = this.addTodo.bind(this);  <- 협업에서는 좋지 않다
+		// this.addTodo = this.addTodo.bind(this);  <- 성능에는 좋지만 협업에서는 좋지 않다
 	}
 	
 	addTodo(text) {
