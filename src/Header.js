@@ -4,12 +4,29 @@ import React from 'react';
 // 1) ToggleAll
 // 2) addTodo
 class Header extends React.Component{
+
+  handleKeyDown(e){
+      //this.props.addTodo
+      // only when 'Enter' is presed, and there is text in the input
+      // --> then execute todoSave && clear the input
+      const text = e.target.value;
+      if(!text || e.keyCode!== 13) return;
+      this.props.addTodo(text);
+      e.target.value = "";
+      
+  }
+
   render(){
     return (
-      <div className="todo-app__header">
-        <h1>todos</h1>
-        <input className="todo-app__new-todo" placeholder="What needs to be done?"/>
-      </div>
+      <header>
+        <h1 className="todo-app__header">todos</h1>
+        <input
+          type="text"
+          className="todo-app__new-todo"
+          placeholder="What needs to be done?"
+          onKeyDown={ e => this.handleKeyDown(e) }
+        />
+      </header>
     );
   }
 }
