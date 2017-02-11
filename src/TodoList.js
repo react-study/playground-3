@@ -4,31 +4,14 @@
 import React, {Component} from 'react';
 import Todo from './Todo';
 
-const data = [{
-    id:1,
-    text: 'hello world1',
-    isDone: true
-},{
-    id:2,
-    text: 'hello world2',
-    isDone: false
-},{
-    id:3,
-    text: 'hello world3',
-    isDone: true
-},{
-    id:4,
-    text: 'hello world4',
-    isDone: true
-}];
-
 class TodoList extends Component {
     render() {
-        const todos = data.map(todo =>(
+        const todos = this.props.todos.map(todo =>(
            <Todo
                key={`todo#${todo.id}`}
                 text={todo.text}
                 isDone={todo.isDone}
+                deleteTodo={()=>this.props.deleteTodo(todo.id)}
            />
         ));
         return(
