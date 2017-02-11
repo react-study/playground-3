@@ -25,6 +25,16 @@ module.exports = {
         publicPath: URL
     },
     module: {
+        /*
+            esLint off
+         */
+        // preLoaders: [
+        //     {
+        //         test: /\.jsx?$/,
+        //         exclude: /node_modules/,
+        //         loader: 'eslint'
+        //     }
+        // ],
         loaders: [
             {
                 test: /\.jsx?$/,
@@ -34,11 +44,15 @@ module.exports = {
             }
         ]
     },
+    eslint: {
+        failOnWarning: false,
+        failOnError: true
+    },
     resolve: {
         root: [ _PATH ],
         extensions: [ '', '.js', '.jsx' ]
     },
-    node: { fs: "empty" },
+    node: { fs: 'empty' },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.EvalSourceMapDevToolPlugin(),
