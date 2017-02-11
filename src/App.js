@@ -51,7 +51,7 @@ class App extends Component {
     }
     render() {
         return(
-            <div>
+            <div className="todo-app__main">
                 <Header addTodo={(text)=>this.addTodo(text)}/>
                 <TodoList todos={this.state.todos} deleteTodo={(id)=>this.deleteTodo(id)} />
                 <Footer />
