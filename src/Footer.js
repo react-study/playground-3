@@ -7,21 +7,46 @@ import React, {
 
 class Footer extends Component {
     render() {
+        const {
+            filterName,
+            activeLength,
+            completedLength,
+            deleteCompleted,
+            selectFilter
+        } = this.props;
+
+        const filters = ['All', 'Active', 'Completed'];
         return(
             <div className="footer">
-                <span className="todo-count">0 items left</span>
+                <span className="todo-count">
+                    <strong>{activeLength}</strong>
+                    {' '}
+                    {activeLength===1 ? 'item':'items'}
+                    left
+                </span>
                 <ul className="todo-filters">
-                    <li>
-                        <a href="#">All</a>
-                    </li>
-                    <li>
-                        <a href="#">Active</a>
-                    </li>
-                    <li>
-                        <a href="#">Completed</a>
-                    </li>
+                    {
+                        filters.map(
+                            filter=>{
+                                return <li key={`filter#${filter}`}>
+                                    <a
+                                        href="#"
+                                        className={filterName?'seleted':''}
+                                        onClick={()=>selectFilter(filter)}
+                                    >
+                                        {filter}
+                                    </a>
+                                </li>;
+                            }
+                        )
+                    }
                 </ul>
-                <button className="todo-delete-completed">
+                <button className={[
+                    'todo-delete-completed',
+                    completedLength ? '' : 'hidden'
+                ].join( ' ')}
+                        onClick={deleteCompleted}
+                >
                     clear Completed
                 </button>
             </div>

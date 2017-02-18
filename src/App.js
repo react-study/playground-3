@@ -28,7 +28,8 @@ class App extends Component {
                 text: 'hello world4',
                 isDone: true
             }],
-            editingId: ' '
+            editingId: null,
+            filterName : 'All'
         };
     }
 
@@ -71,18 +72,79 @@ class App extends Component {
             editingId : null
         });
     }
+
+    toggleTodo(id) {
+        const newTodos = [...this.state.todos];
+        const toggleIndex = newTodos.findIndex( todo => (todo.id === id) );
+        newTodos[toggleIndex].isDone = !newTodos[toggleIndex].isDone;
+        this.setState({
+            todos:newTodos
+        });
+    }
+
+    toggleAll() {
+        console.log('111');
+        const newToggleAll = !this.state.todos.every( todo => todo.isDone);
+        const newTodos = [...this.state.todos].map(todo => {
+            todo.isDone = newToggleAll;
+            return todo;
+        });
+        this.setState({
+            todos:newTodos
+        });
+    }
+
+    deleteCompleted() {
+        const newTodos = this.state.todos.filter(todo=>!todo.isDone);
+        this.setState({
+            todos: newTodos
+        });
+    }
+
+    selectFilter(filter) {
+        this.setState({
+            filterName : filter
+        });
+    }
+
     render() {
+        const {
+            todos,
+            editingId,
+            filterName
+        } = this.state;
+
+        const activeLength = todos.filter(todo=>!todo.isDone).length;
+        const completedLength = todos.length - activeLength;
+        const filteredTodos = (filterName === 'All') ?
+            todos
+            : todos.filter(todo => {
+                return (filterName ==='Active' && !todo.isDone) ||
+                (filterName ==='Completed' && todo.isDone);
+            });
+
         return(
             <div className="todo-app__main">
                 <Header addTodo={(text)=>this.addTodo(text)}/>
-                <TodoList todos={this.state.todos}
-                          editingId = {this.state.editingId}
+                <TodoList todos={filteredTodos}
+                          editingId = {editingId}
                           deleteTodo={(id)=>this.deleteTodo(id)}
                           editTodo={(id)=>this.editTodo(id)}
                           saveTodo={(id, text)=>this.saveTodo(id,text)}
                           cancelEdit={()=>this.cancelEdit()}
+                          toggleTodo={(id)=>this.toggleTodo(id)}
+                          toggleAll={()=>this.toggleAll()}
                 />
-                <Footer />
+                <Footer
+                    filterName = {filterName}
+                    activeLength={activeLength}
+                    completedLength={completedLength}
+                    deleteCompleted={()=>this.deleteCompleted()}
+                    selectFilter={(filter)=>{
+                        console.log('filter : ' + filter );
+                        this.selectFilter(filter);
+                    }}
+                />
             </div>
         );
     }

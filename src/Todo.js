@@ -25,12 +25,12 @@ class Todo extends Component {
     }
     render() {
         const {
-            text, isDone, isEditing, deleteTodo, editTodo, cancelEdit
+            text, isDone, isEditing, deleteTodo, editTodo, cancelEdit, toggleTodo
         } = this.props;
 
         return(
-            <li className={['todo-item', isEditing? 'editing':' '].join(' ')}>
-                <div className="toggle" />
+            <li className={['todo-item', isEditing? 'editing':' ', isDone ? 'completed':''].join(' ')}>
+                <div className="toggle" onClick={toggleTodo}/>
                 <div className="todo-item__view">
                     <div className="todo-item__view__text" onDoubleClick={editTodo}>
                         {text}
