@@ -27,7 +27,8 @@ class App extends Component {
                 id:4,
                 text: 'hello world4',
                 isDone: true
-            }]
+            }],
+            editingId: ' '
         };
     }
 
@@ -49,11 +50,38 @@ class App extends Component {
             todos: newTodos
         });
     }
+
+    editTodo(id) {
+        this.setState({
+            editingId:id
+        });
+    }
+    cancelEdit() {
+        this.setState({
+            editingId:null
+        });
+    }
+
+    saveTodo(id, newText) {
+        const newTodos = [...this.state.todos];
+        const editIndex = newTodos.findIndex( todo => (todo.id === id) );
+        newTodos[editIndex].text = newText;
+        this.setState({
+            todos:newTodos,
+            editingId : null
+        });
+    }
     render() {
         return(
             <div className="todo-app__main">
                 <Header addTodo={(text)=>this.addTodo(text)}/>
-                <TodoList todos={this.state.todos} deleteTodo={(id)=>this.deleteTodo(id)} />
+                <TodoList todos={this.state.todos}
+                          editingId = {this.state.editingId}
+                          deleteTodo={(id)=>this.deleteTodo(id)}
+                          editTodo={(id)=>this.editTodo(id)}
+                          saveTodo={(id, text)=>this.saveTodo(id,text)}
+                          cancelEdit={()=>this.cancelEdit()}
+                />
                 <Footer />
             </div>
         );
