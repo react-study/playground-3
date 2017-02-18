@@ -10,10 +10,10 @@ class Header extends React.Component{
       // only when 'Enter' is presed, and there is text in the input
       // --> then execute todoSave && clear the input
       const text = e.target.value;
-      if(!text || e.keyCode!== 13) return;
+      if(!text || e.keyCode !== 13) return;
       this.props.addTodo(text);
       e.target.value = "";
-      
+
   }
 
   render(){

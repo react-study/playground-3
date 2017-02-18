@@ -22,7 +22,9 @@ class App extends Component {
           text: "치킨에 맥주3",
           isDone: true
         }
-      ]
+      ],
+      idOnEdit: null,
+      filterName: 'All'
     };
     // bind를 하는 방법
     // 1) render() 에서 하는 법 (중복가능)
@@ -54,17 +56,101 @@ class App extends Component {
     });
   }
 
+  deleteCompleted() {
+    const newTodos = this.state.todos.filter( v => !v.isDone);
+    this.setState({
+      todos: newTodos
+    });
+  }
+
+  editTodo(id){
+    this.setState({
+      idOnEdit: id
+    });
+  }
+
+  cancelEdit() {
+    this.setState({
+      idOnEdit: null
+    });
+  }
+
+  saveTodo(id, newText){
+    const newTodos = [...this.state.todos];
+    const editIndex = newTodos.findIndex(todo => todo.id === id);
+    newTodos[editIndex].text = newText;
+
+    this.setState({
+      todos: newTodos,
+      idOnEdit: null
+    });
+  }
+
+  toggleTodo(id) {
+    const newTodos = [...this.state.todos];
+    const toggleIndex = newTodos.findIndex(todo => todo.id === id);
+    newTodos[toggleIndex].isDone = !newTodos[toggleIndex].isDone;
+
+    this.setState({
+      todos: newTodos
+    });
+  }
+
+  toggleAll() {
+    const toggleAll = !this.state.todos.every(v => v.isDone);
+    const newTodos = this.state.todos.map( todo => {
+      todo.isDone = toggleAll;
+      return todo;
+    });
+    this.setState({
+      todos: newTodos
+    });
+  }
+
+  selectFilter(filter){
+    this.setState({
+      filterName: filter
+    });
+  }
+
   render() {
+    const {
+      todos,
+      idOnEdit,
+      filterName
+    } = this.state;
+
+    const activeLength = todos.filter(v => !v.isDone).length;
+    const completeLength = todos.length - activeLength;
+    const filteredTodos = (filterName == 'All') ? todos : todos.filter(todo => (
+
+      (filterName == 'Active' && !todo.isDone) || filterName == 'Completed' && todo.isDone)
+      // if(filterName == 'Active' && !todo.isDone) return true;
+      // if(filterName == 'Completed' && todo.isDone) return true;
+    );
+
     return (
       <div className="todo-app">
         <Header
           addTodo={text => this.addTodo(text)}
         />
         <TodoList
-          todos={this.state.todos}
+          todos={filteredTodos}
+          editingId={idOnEdit}
           deleteTodo={id => this.deleteTodo(id)}
+          editTodo={ id => this.editTodo(id)}
+          saveTodo={(id,newText) => this.saveTodo(id, newText)}
+          cancelEdit={() => this.cancelEdit()}
+          toggleTodo={id => this.toggleTodo(id)}
+          toggleAll={() => this.toggleAll()}
         />
-        <Footer />
+        <Footer
+          filterName={filterName}
+          activeLength={activeLength}
+          completeLength={completeLength}
+          deleteCompleted={() => this.deleteCompleted()}
+          selectFilter={filter => this.selectFilter(filter)}
+        />
       </div>
     );
   }

@@ -12,20 +12,43 @@ class TodoList extends React.Component {
 
   render() {
 
-    const todos = this.props.todos.map( todo => (
+    const {
+      todos,
+      editingId,
+      deleteTodo,
+      editTodo,
+      saveTodo,
+      cancelEdit,
+      toggleTodo,
+      toggleAll
+    } = this.props;
+
+    const todoMap = this.props.todos.map( todo => (
       <Todo
         key={`todo#${todo.id}`}
         text={todo.text}
         isDone={todo.isDone}
-        deleteTodo={() => this.props.deleteTodo(todo.id)}
+        isEditing={todo.id == editingId}
+        deleteTodo={() => deleteTodo(todo.id)}
+        editTodo={() => editTodo(todo.id)}
+        saveTodo={text => saveTodo(todo.id, text)}
+        cancelEdit={cancelEdit}
+        toggleTodo={() => toggleTodo(todo.id)}
       />
     ));
 
     return (
       <div className="todo-app__main">
-        <div className="toggle-all"/>
+        <div
+            className={
+              ClassNames('toggle-all', {
+                'checked': todos.every( v => v.isDone )
+              })
+            }
+            onClick={toggleAll}
+        />
         <ul className="todo-list">
-          {todos}
+          {todoMap}
         </ul>
       </div>
     );
