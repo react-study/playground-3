@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class Todo extends Component {
+    componentDidUpdate(prevProps) {
+        if(this.props.isEditing && !prevProps.isEditing) {
+            this.textInput.focus();
+            this.textInput.value = this.props.text;
+        }
+    }
     handleKeyDown(e) {
         const text = e.target.value;
         if(!text || e.keyCode !== 13) return;
@@ -35,6 +41,7 @@ class Todo extends Component {
                 </div>
                 <input
                     type="text"
+                    ref={ref => { this.textInput = ref; }}
                     className="todo-item__edit"
                     onKeyDown={e => this.handleKeyDown(e)}
                     onBlur={cancelEdit}
