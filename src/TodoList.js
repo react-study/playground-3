@@ -8,7 +8,7 @@ class TodoList extends Component {
 				key={`todo#${todo.id}`}
 				text={todo.text}
 				isDone={todo.isDone}
-			    deleteTodo={() => this.props.deleteTodo(Todo.id)}
+				deleteTodo={() => this.props.deleteTodo(Todo.id)}
 			/>
 		));
 		return (
