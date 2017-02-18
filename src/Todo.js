@@ -20,15 +20,19 @@ class Todo extends Component {
             isEditing,
             deleteTodo,
             editTodo,
-            cancelEdit
+            cancelEdit,
+            toggleTodo
         } = this.props;
 
         return (
             <li className={[
                 'todo-item',
-                isEditing ? 'editing' : ''
+                isEditing ? 'editing' : '',
+                isDone ? 'completed' : ''
             ].join(' ')}>
-                <div className="toggle" />
+                <div className="toggle"
+                    onClick={toggleTodo}
+                />
                 <div className="todo-item__view">
                     <div
                         className="todo-item__view__text"

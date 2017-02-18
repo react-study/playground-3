@@ -62,6 +62,24 @@ class App extends Component {
             editingId: null
         });
     }
+    toggleTodo(id) {
+        const newTodos = [...this.state.todos];
+        const toggleIndex = newTodos.findIndex(todo => todo.id === id);
+        newTodos[toggleIndex].isDone = !newTodos[toggleIndex].isDone;
+        this.setState({
+            todos: newTodos
+        });
+    }
+    toggleAll() {
+        const newToggleAll = !this.state.todos.every(v => v.isDone);
+        const newTodos = this.state.todos.map(todo => {
+            todo.isDone = newToggleAll;
+            return todo;
+        });
+        this.setState({
+            todos: newTodos
+        });
+    }
 
     render() {
         const {
@@ -80,6 +98,8 @@ class App extends Component {
                     editTodo={id => this.editTodo(id)}
                     saveTodo={(id, newText) => this.saveTodo(id, newText)}
                     cancelEdit={() => this.cancelEdit()}
+                    toggleTodo={id => this.toggleTodo(id)}
+                    toggleAll={() => this.toggleAll()}
                 />
                 <Footer />
             </div>
