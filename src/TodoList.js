@@ -10,7 +10,10 @@ class TodoList extends Component{
 			deleteTodo,
 			editTodo,
 			saveTodo,
-			cancelEdit
+			cancelEdit,
+			toggleTodo,
+
+			toggleAll
 		} = this.props;
 
 		const todoList = todos.map(todo =>(
@@ -24,12 +27,19 @@ class TodoList extends Component{
 				editTodo={ () => editTodo(todo.id) }
 				saveTodo ={ text=> saveTodo(todo.id, text) }
 				cancelEdit={ cancelEdit }
+				toggleTodo={() => toggleTodo(todo.id)}
 			/>
 		));
 
 		return(
 			<div className ="todo-app__main">
-				<div className="toggle-all" />
+				<div 
+					className={[
+						"toggle-all",
+						todos.every(v=> v.isDone) ? "checked" : ''
+						].join(' ')}
+					onClick={ toggleAll }
+				/>
 				<ul className="todo-list">
 					{todoList}
 				</ul>

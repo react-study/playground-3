@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class Todo extends Component{
-	
+
 	componentDidUpdate(pervProps){
 		if(this.props.isEditing && !pervProps.isEditing){
 			this.textInput.focus();
@@ -20,8 +20,6 @@ class Todo extends Component{
 		e.target.value = '';
 	}
 
-
-
 	render(){
 		const {
 			text,
@@ -30,15 +28,21 @@ class Todo extends Component{
 
 			deleteTodo,
 			editTodo,
-			cancelEdit
+			cancelEdit,
+			toggleTodo
 		} = this.props;
 
 		return(
 			<li className={[
 							"todo-item",
-							isEditing ? "editing" : ""
+							isEditing ? "editing" : "",
+							isDone ? 'completed' : ""
+
 							].join(' ')}>
-				<div className="toggle" />
+				<div 
+					className="toggle" 
+					onClick={toggleTodo}
+				/>
 				<div className="todo-item__view">
 					<div
 						className="todo-item__view__text"
