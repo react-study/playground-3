@@ -4,7 +4,7 @@
 import React, {
     Component
 } from 'react';
-
+import ClassNames from 'classnames';
 class Footer extends Component {
     render() {
         const {
@@ -31,7 +31,9 @@ class Footer extends Component {
                                 return <li key={`filter#${filter}`}>
                                     <a
                                         href="#"
-                                        className={filterName?'seleted':''}
+                                        className={
+                                            ClassNames({'selected':filterName===filter})
+                                        }
                                         onClick={()=>selectFilter(filter)}
                                     >
                                         {filter}
