@@ -14,7 +14,7 @@ class Header extends React.Component {
                 <input
                     type="text"
                     className="todo-app__new-todo"
-                    onKeyDown={ e => this.handleKeyDown(e)}
+                    onKeyDown={e => this.handleKeyDown(e)}
                 />
             </header>
         );
