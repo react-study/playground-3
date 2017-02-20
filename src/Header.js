@@ -17,6 +17,7 @@ class Header extends Component {
                     placeholder="What needs to be done?"
                     onKeyDown={e => this.handleKeyDown(e)}
                 />
+                <div className="toggle-all" />
             </header>
         );
     }

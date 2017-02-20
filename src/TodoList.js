@@ -13,7 +13,6 @@ class TodoList extends Component {
         ));
         return (
             <div className="todo-app__main">
-                <div className="toggle-all" />
                 <ul className="todo-list">
                     {todos}
                 </ul>
