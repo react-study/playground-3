@@ -1,51 +1,45 @@
-var path = require('path');
-var webpack = require('webpack');
+const { resolve } = require('path');
+const webpack = require('webpack');
 
-var HOST  = 'http://localhost';
-var PORT  = 8080;
-var URL   = HOST + ':' + PORT + '/';
-var _PATH = path.resolve(__dirname, 'src');
+const HOST  = 'localhost';
+const PORT  = 8080;
+const URL   = `http://${HOST}:${PORT}`;
+const _PATH = resolve(__dirname, 'src');
 
 module.exports = {
-    HOST: HOST,
-    PORT: PORT,
-    URL: URL,
-    devtool: 'cheap-module-eval-source-map',
-    context: _PATH,
-    entry: {
-        index: [
-            'webpack-dev-server/client?' + HOST + ':' + PORT,
-            'webpack/hot/only-dev-server',
-            path.resolve(_PATH, 'main')
-        ]
-    },
+    entry: [
+        `webpack-dev-server/client?http://${HOST}:${PORT}`,
+        './main.js'
+    ],
     output: {
-        path: _PATH,
         filename: 'bundle.js',
-        publicPath: URL
+        path: _PATH,
+        publicPath: '/',
+    },
+    context: _PATH,
+    devtool: 'cheap-module-eval-source-map',
+    devServer: {
+        contentBase: _PATH,
+        publicPath: '/',
+        compress: true,
+        port: PORT
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
-                include: [ _PATH ],
-                exclude: [ /node_modules/ ],
-                loader: 'babel?cacheDirectory'
+                exclude: /node_modules/,
+                loader: 'babel-loader?cacheDirectory'
             }
         ]
     },
-    eslint: {
-        failOnWarning: false,
-        failOnError: true
-    },
     resolve: {
-        root: [ _PATH ],
-        extensions: [ '', '.js', '.jsx' ]
+        modules: [ _PATH, 'node_modules' ],
+        extensions: [ '.js' ]
     },
-    node: { fs: 'empty' },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
         new webpack.EvalSourceMapDevToolPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin()
     ]
 };

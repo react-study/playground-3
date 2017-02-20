@@ -1,4 +1,4 @@
-# playground-2
+# playground-3
 
 React Study 3기 실습용 리파지토리
 
