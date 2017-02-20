@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ClassNames from 'classnames';
 
 class Todo extends Component {
     componentDidUpdate(prevProps) {
@@ -27,11 +28,11 @@ class Todo extends Component {
         } = this.props;
 
         return(
-            <li className={[
-                'todo-item',
-                isEditing ? 'editing' : '',
-                isDone ? 'completed' : ''
-            ].join(' ').trim()}>
+            <li className={ClassNames('todo-item', {
+                'editing' : isEditing,
+                'completed': isDone
+            })}
+            >
                 <div className="toggle"
                     onClick={toggleTodo}
                 />
