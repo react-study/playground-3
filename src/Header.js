@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ClassNames from 'classnames';
 
 class Header extends Component {
     handleKeyDown(e) {
@@ -8,6 +9,11 @@ class Header extends Component {
         e.target.value = '';
     }
     render() {
+        const {
+            toggleAll,
+            isAllDone
+        } = this.props;
+
         return (
             <header>
                 <h1 className="todo-app__header">todos</h1>
@@ -16,6 +22,12 @@ class Header extends Component {
                     className="todo-app__new-todo"
                     placeholder="What needs to be done?"
                     onKeyDown={e => this.handleKeyDown(e)}
+                />
+                <div
+                    className={ClassNames('toggle-all', {
+                        'checked': isAllDone
+                    })}
+                    onClick={toggleAll}
                 />
             </header>
         );

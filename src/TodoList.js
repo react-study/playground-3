@@ -32,12 +32,6 @@ class TodoList extends Component {
         ));
         return (
             <div className="todo-app__main">
-                <div
-                    className={ClassNames('toggle-all', {
-                        'checked': todos.every(v => v.isDone)
-                    })}
-                    onClick={toggleAll}
-                />
                 <ul className="todo-list">
                     {todoList}
                 </ul>

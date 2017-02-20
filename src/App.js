@@ -112,7 +112,9 @@ class App extends Component {
         return (
             <div className="todo-app">
                 <Header
+                    isAllDone={todos.every(v=> v.isDone)}
                     addTodo={text => this.addTodo(text)}
+                    toggleAll={() => this.toggleAll()}
                 />
                 <TodoList
                     todos={filteredTodos}
@@ -122,7 +124,6 @@ class App extends Component {
                     saveTodo={(id, newText) => this.saveTodo(id, newText)}
                     cancelEdit={() => this.cancelEdit()}
                     toggleTodo={id => this.toggleTodo(id)}
-                    toggleAll={() => this.toggleAll()}
                 />
                 <Footer
                     activeLength={activeLength}

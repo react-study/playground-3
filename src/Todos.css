@@ -119,8 +119,8 @@ label[for='toggle-all'] {
 
 .toggle-all {
 	position: absolute;
-	top: -55px;
-	left: -12px;
+	top: 15px;
+	left: -14px;
 	width: 60px;
 	height: 34px;
 	text-align: center;
