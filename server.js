@@ -1,34 +1,27 @@
 var path = require('path');
-var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config.js');
+const webpack = require('webpack');
+const webpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config.js');
 
-var compiler = webpack(config);
+const compiler = webpack(config);
 
-var serverOptions = {
+const serverOptions = {
     contentBase: path.resolve(__dirname, 'src'),
-    progress: true,
-    hot: true,
-    watch: true,
-    verbose: true,
-    publicPath: config.URL,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    compress: true,
     historyApiFallback: true,
     stats: {
-        cached: true,
-        cachedAssets: true,
-        chunks: true,
-        chunkModules: false,
+        chunks: false,
         colors: true,
         hash: false,
         reasons: true,
         timings: true,
-        version: false
+        version: false,
+        warnings: true
     }
 };
 
-var server = new webpackDevServer(compiler, serverOptions);
+const server = new webpackDevServer(compiler, serverOptions);
 
-server.listen(config.PORT, function() {
-    console.log('now listening ' + config.URL);
-})
+server.listen(8080, () => {
+    console.log('now listening http://localhost:8080');
+});
