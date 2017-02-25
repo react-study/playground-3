@@ -23,8 +23,7 @@ class App extends Component {
                     isDone: true
                 }
             ],
-            editingId: null,
-            filterName: 'All'
+            editingId: null
         };
     }
     addTodo(text) {
@@ -87,27 +86,27 @@ class App extends Component {
             todos: newTodos
         });
     }
-    selectFilter(filter) {
-        this.setState({
-            filterName: filter
-        });
-    }
 
     render() {
         const {
             todos,
-            editingId,
-            filterName
+            editingId
         } = this.state;
+
+        const {
+            routeParams: {
+                filter: filterName
+            }
+        } = this.props;
 
         const activeLength = todos.filter(v => !v.isDone).length;
         const completeLength = todos.length - activeLength;
 
-        const filteredTodos = (filterName === 'All')
+        const filteredTodos = !filterName
             ? todos
             : todos.filter(todo => (
-                (filterName === 'Active' && !todo.isDone) ||
-                (filterName === 'Completed' && todo.isDone)
+                (filterName === 'active' && !todo.isDone) ||
+                (filterName === 'completed' && todo.isDone)
             ));
         return (
             <div className="todo-app">
