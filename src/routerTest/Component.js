@@ -23,9 +23,7 @@ export const Portfolio = ({routerParams : {id}}) =>{
   return(
     <div>
       <h2>portfolio</h2>
-      <ul>
-        {renderList}
-      </ul>
+      <ul>{renderList}</ul>
     </div>
   );
 }
