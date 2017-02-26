@@ -23,7 +23,7 @@ class App extends Component {
         axi.get('/').then(res => {
             console.log(res);
             this.setState({
-                todo : res.data
+                todos : res.data
             });
         });
     }

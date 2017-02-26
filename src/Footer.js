@@ -27,7 +27,7 @@ class Footer extends Component {
                             <Link
                                 to={`/${v}`}
                                 className={
-                                    ClassName({
+                                    ClassNames({
                                         'selected' : (filterName === v) || (!v && !filterName)
                                     })}
                                     >{v ? v.replace(/^\w/, v => v.toUpperCase()) : 'All'}
