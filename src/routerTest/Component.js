@@ -9,7 +9,7 @@ export const About = ({ children }) => (
 	</div>
 );
 
-export const Name = () => ( <h2>재남</h2> );
+export const Name = () => ( <h2>이름</h2> );
 
 const allList = [
 	{ id: 1, text: 'portfolio #1' },
@@ -24,7 +24,7 @@ export const Portfolio = ({ routeParams: {id} } ) => {
 	));
 	return(
 		<div>
-			<h2>Portfoloi</h2>
+			<h2>Portfolio</h2>
 			<ul>{renderList}</ul>
 		</div>
 	);

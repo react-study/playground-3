@@ -15,9 +15,9 @@ class App extends React.Component {
 						<Route path="redirect0"
 							onEnter={(nextState, replace) => replace('/portfolio/1')}
 						/>
-						<Redirect from="redirect1" to="portfolio/2"></Redirect>
-						<Route path="portfolio(/:id)" component={Portfolio} />
+						<Redirect from="redirect1" to="/portfolio/2"></Redirect>
 					</Route>
+					<Route path="portfolio(/:id)" component={Portfolio} />
 				</Route>
 			</Router>
 		);
