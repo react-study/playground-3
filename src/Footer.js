@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import ClassNames from 'classnames';
 
 class Footer extends Component {
@@ -10,7 +11,7 @@ class Footer extends Component {
             deleteCompleted,
             selectFilter
         } = this.props;
-        const filters = ['All', 'Active', 'Completed'];
+        const filters = ['', 'active', 'completed'];
 
         return (
             <div className="footer">
@@ -23,13 +24,12 @@ class Footer extends Component {
                 <ul className="todo-filters">
                     {filters.map(v => (
                         <li key={`filter#${v}`}>
-                            <a
-                                href="#"
+                            <Link
+                                to={`/${v}`}
                                 className={ClassNames({
-                                    'selected': filterName === v
+                                    'selected': (filterName === v) || (!v && !filterName)
                                 })}
-                                onClick={() => selectFilter(v)}
-                            >{v}</a>
+                            >{v ? v.replace(/^\w/, v => v.toUpperCase()) : 'All'}</Link>
                         </li>
                     ))}
                 </ul>
