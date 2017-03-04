@@ -10,8 +10,8 @@ class Footer extends Component {
 			      completeLength,
 			      deleteCompleted,
 			      selectFilter
-		      }       = this.props;
-		const filters = ['All', 'active', 'completed'];
+		      } = this.props;
+		const filters = ['', 'active', 'completed'];
 		
 		return (
 			<div className="footer">
@@ -27,9 +27,9 @@ class Footer extends Component {
 							<Link
 								to={`/${v}`}
 								className={ClassNames({
-									'selected' : (filterName === v) || (!v && !filterName)
+									'selected': (filterName === v) || (!v && !filterName)
 								})}
-							>{v ? v.replace(/^\w/, v=> v.toUpperCase()) : 'All'}</Link>
+							>{v ? v.replace(/^\w/, v => v.toUpperCase()) : 'All'}</Link>
 						</li>
 					))}
 				</ul>
