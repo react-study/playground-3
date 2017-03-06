@@ -96,33 +96,11 @@ class App extends Component {
                 todos: res.map(v => v.data)
             });
         });
-
-        /*
-        [
-            axi.put(~~~),
-            axi.put(~~~),
-            axi.put(~~~)
-        ].then(res => {     res 자체가 배열
-            [
-                {config, data, headers, status},
-                {config, data, headers, status},
-                {config, data, headers, status}
-            ]
-        })
-        */
-        
-        const newTodos = this.state.todos.map(todo => {
-            todo.isDone = newToggleAll;
-            return todo;
-        });
-        this.setState({
-            todos: newTodos
-        });
     }
 
     render() {
         const {
-            todos = [],
+            todos,
             editingId
         } = this.state;
 
