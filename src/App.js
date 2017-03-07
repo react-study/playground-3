@@ -23,33 +23,60 @@ class App extends Component {
             this.setState({
                 todos: res.data
             });
-        })
+        });
     }
     addTodo(text) {
-        axi.post('/', { text}).then(res => {
-            this.setState({
-                todos: [ ...this.state.todos, res.data ]
-            })
-        })
-    }
-    deleteTodo(id) {
-        axi.delete(`/${id}`).then(res => {
-            const newTodos = [...this.state.todos];
-            const deleteIndex = newTodos.findIndex(todo => todo.id === id);
-            newTodos.splice(deleteIndex, 1);
+        const tempId = Date.now();
+        const prevTodos = this.state.todos;
+
+        this.setState({
+            todos: [ ...prevTodos, { id: tempId, text }]
+        });
+
+        axi.post('/', { text }).then(res => {
+            const newTodos = [ ...this.state.todos ];
+            const tempTodoIndex = newTodos.findIndex(todo => todo.id === tempId);
+
+            newTodos.splice(tempTodoIndex, 1, res.data);
+
             this.setState({
                 todos: newTodos
+            });
+        })
+        .catch(err => {
+            this.setState({
+                todos: prevTodos
+            });
+        });
+    }
+    deleteTodo(id) {
+        const prevTodos = this.state.todos;
+        const deleteIndex = prevTodos.findIndex(todo => todo.id === id);
+
+        const newTodos = [ ...prevTodos ];
+        newTodos.splice(deleteIndex, 1);
+        this.setState({
+            todos: newTodos
+        });
+
+        axi.delete(`/${id}`).catch(err => {
+            this.setState({
+                todos: prevTodos
             });
         });
     }
     deleteCompleted() {
+        const prevTodos = this.state.todos;
+        this.setState({
+            todos: prevTodos.filter(v => !v.isDone)
+        });
+
         const axiosArrays = this.state.todos.filter(v => v.isDone)
             .map(v => axi.delete(`/${v.id}`));
 
-        axios.all(axiosArrays).then(res => {
-            const newTodos = this.state.todos.filter(v => !v.isDone);
+        axios.all(axiosArrays).catch(err => {
             this.setState({
-                todos: newTodos
+                todos: prevTodos
             });
         });
     }
@@ -64,36 +91,58 @@ class App extends Component {
         });
     }
     saveTodo(id, newText) {
-        axi.put(`/${id}`, { text: newText }).then(res => {
-            const newTodos = [...this.state.todos];
-            const editIndex = newTodos.findIndex(todo => todo.id === id);
-            newTodos[editIndex] = res.data;
+        const prevTodos = this.state.todos;
+        const editIndex = prevTodos.findIndex(todo => todo.id === id);
+
+        const newTodos = [ ...prevTodos ];
+        newTodos[editIndex] = Object.assign({}, newTodos[editIndex], {text: newText});
+
+        this.setState({
+            todos: newTodos,
+            editingId: null
+        });
+
+        axi.put(`/${id}`, { text: newText }).catch(err => {
             this.setState({
-                todos: newTodos,
-                editingId: null
+                todos: prevTodos
             });
         });
     }
     toggleTodo(id) {
-        const newDone = !this.state.todos.find(v => v.id === id).isDone;
-        axi.put(`/${id}`, { isDone: newDone }).then(res => {
-            const newTodos = [...this.state.todos];
-            const toggleIndex = newTodos.findIndex(todo => todo.id === id);
-            newTodos[toggleIndex] = res.data;
+        const prevTodos = this.state.todos;
+        const newTodos = [ ...prevTodos ];
+        const toggleIndex = newTodos.findIndex(v => v.id === id);
+        const newDone = !newTodos[toggleIndex].isDone;
+
+        newTodos[toggleIndex] = Object.assign({}, newTodos[toggleIndex], {isDone: newDone});
+        this.setState({
+            todos: newTodos
+        });
+
+        axi.put(`/${id}`, { isDone: newDone }).catch(err => {
             this.setState({
-                todos: newTodos
+                todos: prevTodos
             });
-        })
+        });
     }
     toggleAll() {
-        const newToggleAll = !this.state.todos.every(v => v.isDone);
+        const prevTodos = this.state.todos;
+        const newToggleAll = !prevTodos.every(v => v.isDone);
+        const newTodos = prevTodos.map(todo => 
+            Object.assign({}, todo, { isDone : newToggleAll })
+        );
+
+        this.setState({
+            todos: newTodos
+        });
+
         const axiosArrays = this.state.todos.map(v =>
             axi.put(`/${v.id}`, { isDone: newToggleAll })
         );
 
-        axios.all(axiosArrays).then( res => {
+        axios.all(axiosArrays).catch(err => {
             this.setState({
-                todos: res.map(v => v.data)
+                todos: prevTodos
             });
         });
     }
