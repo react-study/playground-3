@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import update from 'immutability-helper';
 
 import Header from './Header';
 import TodoList from './TodoList';
@@ -29,19 +30,30 @@ class App extends Component {
         const tempId = Date.now();
         const prevTodos = this.state.todos;
 
-        this.setState({
-            todos: [ ...prevTodos, { id: tempId, text }]
-        });
+        this.setState(
+            update(this.state, {
+                todos: {
+                    $push: [{
+                        id: tempId,
+                        text
+                    }]
+                }
+            })      
+        );
 
         axi.post('/', { text }).then(res => {
             const newTodos = [ ...this.state.todos ];
             const tempTodoIndex = newTodos.findIndex(todo => todo.id === tempId);
 
-            newTodos.splice(tempTodoIndex, 1, res.data);
-
-            this.setState({
-                todos: newTodos
-            });
+            this.setState(
+                update(this.state, {
+                    todos: {
+                        $splice: [[
+                            tempTodoIndex, 1, res.data
+                        ]]
+                    }
+                })
+            );
         })
         .catch(err => {
             this.setState({
@@ -53,8 +65,10 @@ class App extends Component {
         const prevTodos = this.state.todos;
         const deleteIndex = prevTodos.findIndex(todo => todo.id === id);
 
-        const newTodos = [ ...prevTodos ];
-        newTodos.splice(deleteIndex, 1);
+        const newTodos = update(prevTodos, {
+            $splice: [[ deleteIndex, 1 ]]
+        });
+
         this.setState({
             todos: newTodos
         });
@@ -67,8 +81,11 @@ class App extends Component {
     }
     deleteCompleted() {
         const prevTodos = this.state.todos;
+        const newTodos = update(prevTodos, {
+            $apply: todos => todos.filter(v => !v.isDone)
+        });
         this.setState({
-            todos: prevTodos.filter(v => !v.isDone)
+            todos: newTodos
         });
 
         const axiosArrays = this.state.todos.filter(v => v.isDone)
@@ -94,8 +111,13 @@ class App extends Component {
         const prevTodos = this.state.todos;
         const editIndex = prevTodos.findIndex(todo => todo.id === id);
 
-        const newTodos = [ ...prevTodos ];
-        newTodos[editIndex] = Object.assign({}, newTodos[editIndex], {text: newText});
+        const newTodos = update(prevTodos, {
+            [editIndex]: {
+                text: {
+                    $set: newText
+                }
+            }
+        });
 
         this.setState({
             todos: newTodos,
@@ -110,11 +132,16 @@ class App extends Component {
     }
     toggleTodo(id) {
         const prevTodos = this.state.todos;
-        const newTodos = [ ...prevTodos ];
-        const toggleIndex = newTodos.findIndex(v => v.id === id);
-        const newDone = !newTodos[toggleIndex].isDone;
+        const toggleIndex = prevTodos.findIndex(v => v.id === id);
+        const newDone = !prevTodos[toggleIndex].isDone;
 
-        newTodos[toggleIndex] = Object.assign({}, newTodos[toggleIndex], {isDone: newDone});
+        const newTodos = update(prevTodos, {
+            [toggleIndex]: {
+                isDone: {
+                    $set: newDone
+                }
+            }
+        });
         this.setState({
             todos: newTodos
         });
@@ -128,9 +155,13 @@ class App extends Component {
     toggleAll() {
         const prevTodos = this.state.todos;
         const newToggleAll = !prevTodos.every(v => v.isDone);
-        const newTodos = prevTodos.map(todo => 
-            Object.assign({}, todo, { isDone : newToggleAll })
-        );
+        const newTodos = update(prevTodos, {
+            $apply: todos => todos.map(todo => update(todo, {
+                isDone: {
+                    $set: newToggleAll
+                }
+            }))
+        });
 
         this.setState({
             todos: newTodos
