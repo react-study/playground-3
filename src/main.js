@@ -1,22 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
 
-import App from './App';
+import App from './reduxExample/App';
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/(:filter)" component={App} />
-    </Router>,
+    <App />,
     document.getElementById('root')
 );
-
-/*
-App:
-this.props = {
-    ...
-    routerParams: [
-        filter : ...
-    ]
-}
-*/
