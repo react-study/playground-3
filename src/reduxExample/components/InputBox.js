@@ -1,7 +1,7 @@
 import React from 'react';
 
 class InputBox extends React.Component{
-  handleClick(e, type){
+  handleClick(type){
     this.props[type](this._input.value);
     this._input.value = '';
     this._input.focus();
@@ -11,8 +11,8 @@ class InputBox extends React.Component{
       <div>
         <input type="number" ref={ref => {
           this._input = ref}}/>
-        <button onClick={()=> this.handleClick('save')}>save</button>
-        <button onClick={()=> this.handleClick('withdraw')}>withdraw</button>
+        <button onClick={()=> this.handleClick('save')}>입금</button>
+        <button onClick={()=> this.handleClick('withdraw')}>출금</button>
       </div>
     );
   }

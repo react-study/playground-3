@@ -12,15 +12,13 @@ const AccountBook = ({ accountList }) =>{
     <table>
       <thead>
         <tr>
-          <th></th>
-          <th></th>
-          <th></th>
+          <th>입금</th>
+          <th>출금</th>
+          <th>계</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-
-        </tr>
+        {tableData}
       </tbody>
     </table>
   );
