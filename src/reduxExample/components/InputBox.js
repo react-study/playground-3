@@ -2,10 +2,15 @@ import React from 'react';
 
 class InputBox extends React.Component {
 	handleClick(type) {
-		this.props[type](this._input.value);
+		let val = this._input.value;
+		
+		if(val == null || val == 0) return;
+		
+		this.props[type](val);
 		this._input.value = '';
 		this._input.focus();
 	}
+	
 	render() {
 		return (
 			<div>
