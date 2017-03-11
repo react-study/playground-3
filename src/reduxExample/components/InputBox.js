@@ -2,8 +2,10 @@ import React from 'react';
 
 class InputBox extends React.Component {
 
-  addBtnPressed(){
-    console.log(this.ref.textInput);
+  handleClick(type){
+    this.props[type](this._input.value);
+    this._input.value = '';
+    this._input.focus();
   }
 
   render(){
@@ -12,20 +14,20 @@ class InputBox extends React.Component {
     return (
         <div>
           <input
-            type="text"
+            type="number"
             className="redux-money-input"
             placeholder="숫자를 입력하세요"
-            ref={ref => { this.textInput = ref; }}
+            ref={ref => { this._input = ref; }}
           />
           <button
             className="redux-button"
-            onClick={this.addBtnPressed}
+            onClick={() => this.handleClick('save')}
             >
               입금
           </button>
           <button
             className="redux-button"
-            onClick={this.props.widthdraw}
+            onClick={() => this.handleClick('withdraw')}
             >
               출금
             </button>
