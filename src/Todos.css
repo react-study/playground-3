@@ -32,10 +32,10 @@ body {
 	font-weight: 300;
 }
 
-button,
+/*button,
 input[type="checkbox"] {
 	outline: none;
-}
+}*/
 
 .hidden {
 	display: none;
@@ -375,4 +375,19 @@ html .clear-completed:active {
 	.todo-filters {
 		bottom: 10px;
 	}
+}
+
+.redux-money-input {
+	height: 25px;
+}
+
+.redux-button {
+	background-color: blue;
+	color: white;
+	margin: 5px;
+	padding: 2px 5px;
+}
+
+.redux-button:hover {
+	background-color: black;
 }

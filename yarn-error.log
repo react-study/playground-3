@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add axios
+  /usr/local/bin/node /usr/local/bin/yarn add -D react-native
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/mysql-5.7.11-osx10.9-x86_64/bin
@@ -34,9 +34,11 @@ npm manifest:
       "babel-preset-react": "^6.23.0",
       "babel-preset-stage-1": "^6.22.0",
       "classnames": "^2.2.5",
+      "immutability-helper": "^2.1.2",
       "react": "^15.4.2",
       "react-dom": "^15.4.2",
       "react-hot-loader": "^3.0.0-beta.6",
+      "react-router": "^3.0.2",
       "react-transform-catch-errors": "^1.0.2",
       "react-transform-hmr": "^1.0.4",
       "webpack": "^2.2.1",
@@ -44,6 +46,7 @@ npm manifest:
       "webpack-hot-middleware": "^2.17.0"
     },
     "dependencies": {
+      "axios": "^0.15.3",
       "deployd": "^0.8.9",
       "global": "^4.3.1"
     }
@@ -224,6 +227,12 @@ Lockfile:
   aws4@^1.2.1:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
+  
+  axios@^0.15.3:
+    version "0.15.3"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
+    dependencies:
+      follow-redirects "1.0.0"
   
   babel-code-frame@^6.22.0:
     version "6.22.0"
@@ -1701,6 +1710,12 @@ Lockfile:
       path-exists "^2.0.0"
       pinkie-promise "^2.0.0"
   
+  follow-redirects@1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
+    dependencies:
+      debug "^2.2.0"
+  
   for-in@^0.1.5:
     version "0.1.6"
     resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.6.tgz#c9f96e89bfad18a545af5ec3ed352a1d9e5b4dc8"
@@ -1905,9 +1920,22 @@ Lockfile:
       hoek "2.x.x"
       sntp "1.x.x"
   
+  history@^3.0.0:
+    version "3.2.1"
+    resolved "https://registry.yarnpkg.com/history/-/history-3.2.1.tgz#71c7497f4e6090363d19a6713bb52a1bfcdd99aa"
+    dependencies:
+      invariant "^2.2.1"
+      loose-envify "^1.2.0"
+      query-string "^4.2.2"
+      warning "^3.0.0"
+  
   hoek@2.x.x:
     version "2.16.3"
     resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
+  
+  hoist-non-react-statics@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
   
   home-or-tmp@^2.0.0:
     version "2.0.0"
@@ -1981,6 +2009,12 @@ Lockfile:
     version "1.1.8"
     resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
   
+  immutability-helper@^2.1.2:
+    version "2.1.2"
+    resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.1.2.tgz#734506440d7209b74664dcadaa8ba14e73f2185b"
+    dependencies:
+      invariant "^2.2.0"
+  
   indexof@0.0.1:
     version "0.0.1"
     resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
@@ -2008,7 +2042,7 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.1.tgz#d579fb7f693b858004947af39fa0db49f795602c"
   
-  invariant@^2.2.0:
+  invariant@^2.2.0, invariant@^2.2.1:
     version "2.2.2"
     resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
     dependencies:
@@ -2279,7 +2313,7 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   
-  loose-envify@^1.0.0, loose-envify@^1.1.0:
+  loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0:
     version "1.3.1"
     resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
     dependencies:
@@ -2749,6 +2783,13 @@ Lockfile:
     version "6.3.1"
     resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.1.tgz#918c0b3bcd36679772baf135b1acb4c1651ed79d"
   
+  query-string@^4.2.2:
+    version "4.3.2"
+    resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.2.tgz#ec0fd765f58a50031a3968c2431386f8947a5cdd"
+    dependencies:
+      object-assign "^4.1.0"
+      strict-uri-encode "^1.0.0"
+  
   querystring-es3@^0.2.0:
     version "0.2.1"
     resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -2825,6 +2866,16 @@ Lockfile:
     dependencies:
       lodash "^4.6.1"
   
+  react-router@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/react-router/-/react-router-3.0.2.tgz#5a19156678810e01d81901f9c0fef63284b8a514"
+    dependencies:
+      history "^3.0.0"
+      hoist-non-react-statics "^1.2.0"
+      invariant "^2.2.1"
+      loose-envify "^1.2.0"
+      warning "^3.0.0"
+  
   react-transform-catch-errors@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/react-transform-catch-errors/-/react-transform-catch-errors-1.0.2.tgz#1b4d4a76e97271896fc16fe3086c793ec88a9eeb"
@@ -2859,21 +2910,9 @@ Lockfile:
       normalize-package-data "^2.3.2"
       path-type "^1.0.0"
   
-  readable-stream@2.1.5, readable-stream@~2.1.4:
+  readable-stream@2.1.5, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.0, readable-stream@~2.1.4:
     version "2.1.5"
     resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
-    dependencies:
-      buffer-shims "^1.0.0"
-      core-util-is "~1.0.0"
-      inherits "~2.0.1"
-      isarray "~1.0.0"
-      process-nextick-args "~1.0.6"
-      string_decoder "~0.10.x"
-      util-deprecate "~1.0.1"
-  
-  "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.0:
-    version "2.2.2"
-    resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.2.tgz#a9e6fec3c7dda85f8bb1b3ba7028604556fc825e"
     dependencies:
       buffer-shims "^1.0.0"
       core-util-is "~1.0.0"
@@ -3322,6 +3361,10 @@ Lockfile:
       to-arraybuffer "^1.0.0"
       xtend "^4.0.0"
   
+  strict-uri-encode@^1.0.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
+  
   string-width@^1.0.1, string-width@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/string-width/-/string-width-1.0.2.tgz#118bdf5b8cdc51a2a7e70d211e07e2b0b9b107d3"
@@ -3539,6 +3582,12 @@ Lockfile:
     dependencies:
       indexof "0.0.1"
   
+  warning@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
+    dependencies:
+      loose-envify "^1.0.0"
+  
   watchpack@^1.2.0:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.2.1.tgz#01efa80c5c29e5c56ba55d6f5470a35b6402f0b2"
@@ -3729,5 +3778,5 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/development/react-workspace/todo-app/node_modules/.bin/dpd'
+  Error: EACCES: permission denied, mkdir '/development/react-workspace/todo-app/node_modules/cookies/node_modules'
       at Error (native)
