@@ -7,56 +7,47 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            transactions: [
-                {
-                    id: 1,
-                    type: 'save',
-                    amount: 3000,
-                    balance: 3000
-                }, {
-                    id: 2,
-                    type: 'withdraw',
-                    amount: 1000,
-                    balance: 2000
-                }
-            ]
+            accountList: [],
+            total: 0
         }
     }
 
-    addTransaction(type, amount) {
-        const tempId = Date.now();
-        const newTransaction = this.state.transactions;
-        const lastBalance = newTransaction.length
-            ? newTransaction[newTransaction.length - 1].balance
-            : 0
-
-        let typeCheck = 1;
-
-        if (type === 'withdraw') {
-            typeCheck = -1
-        }
-
-        newTransaction.push({
-            id: tempId,
-            type,
-            amount,
-            balance: lastBalance + ( parseInt(amount) * typeCheck )
-        })
-
+    save(money) {
+        if(typeof money !== 'number') return;
         this.setState({
-            transactions: newTransaction
+            accountList: [
+                ...this.state.accountList, {
+                    type: 'save',
+                    money,
+                    result: this.state.total + money
+                }
+            ],
+            total: this.state.total + money
+        });
+    }
+
+    withdraw(money) {
+        if(typeof money !== 'number') return;
+        this.setState({
+            accountList: [
+                ...this.state.accountList, {
+                    type: 'withdraw',
+                    money,
+                    result: this.state.total - money
+                }
+            ],
+            total: this.state.total - money
         });
     }
 
     render() {
         return(
-            <div className="account_book_app">
-                <InputBox 
-                    addTransaction={(type, amount) => this.addTransaction(type, amount)}
+            <div>
+                <InputBox
+                    save={money => this.save(+money)}
+                    withdraw={money => this.withdraw(+money)}
                 />
-                <AccountBook
-                    transactions={this.state.transactions}
-                />
+                <AccountBook accountList={this.state.accountList} />
             </div>
         );
     }
