@@ -27,7 +27,7 @@ class TodoList extends Component {
                 editTodo={() => editTodo(todo.id)}
                 saveTodo={text => saveTodo(todo.id, text)}
                 cancelEdit={cancelEdit}
-                toggleTodo={() => toggleTodo(todo.id)}
+                toggleTodo={() => toggleTodo(todo.id, !todo.isDone)}
             />
         ));
         return (
