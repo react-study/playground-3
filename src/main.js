@@ -1,9 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
 
-import Main from './reduxExample/Main';
+import store from './store';
+import App from './components/App';
 
 ReactDOM.render(
-    <Main />,
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/(:filter)" component={App} />
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );
