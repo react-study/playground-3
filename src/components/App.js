@@ -6,13 +6,6 @@ import TodoList from './TodoList';
 import Footer from './Footer';
 import TodoActions from '../actions/TodoActions';
 
-/*
-this.state = {
-    todos: [],
-    editingId: null
-};
-*/
-
 const mapStateToProps = state => ({
     todos: state.todos,
     editingId: state.editingId
@@ -25,9 +18,9 @@ const mapDispatchToProps = dispatch => ({
     editTodo        : id => dispatch(TodoActions.editTodo(id)),
     cancelEdit      : () => dispatch(TodoActions.cancelEdit()),
     saveTodo        : (id, newText) => dispatch(TodoActions.saveTodo(id, newText)),
-    toggleTodo      : id => dispatch(TodoActions.toggleTodo(id)),
-    toggleAll       : () => dispatch(TodoActions.toggleAll()),
-    deleteCompleted : () => dispatch(TodoActions.deleteCompleted())
+    toggleTodo      : (id, newDone) => dispatch(TodoActions.toggleTodo(id, newDone)),
+    toggleAll       : todos => dispatch(TodoActions.toggleAll(todos)),
+    deleteCompleted : todos => dispatch(TodoActions.deleteCompleted(todos))
 });
 
 class App extends Component {
@@ -65,7 +58,7 @@ class App extends Component {
                 <Header
                     isAllDone = {todos.every(v => v.isDone)}
                     addTodo   = {addTodo}
-                    toggleAll = {toggleAll}
+                    toggleAll = {()=> toggleAll(todos)}
                 />
                 <TodoList
                     todos      = {filteredTodos}
@@ -80,7 +73,7 @@ class App extends Component {
                     activeLength    = {activeLength}
                     completeLength  = {completeLength}
                     filterName      = {filterName}
-                    deleteCompleted = {deleteCompleted}
+                    deleteCompleted = {()=> deleteCompleted(todos)}
                 />
             </div>
         );
